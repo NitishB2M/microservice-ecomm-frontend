@@ -9,12 +9,12 @@ Welcome to the E-Commerce Application! This project is a full-stack application 
 - [Overview](#overview)
 - [Frontend](#frontend)
 - [Backend](#backend)
-- [Getting Started](#getting-started)
 - [Features](#features)
-- [Folder Structure](#folder-structure)
+- [Getting Started](#getting-started)
+<!-- - [Folder Structure](#folder-structure)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
+- [License](#license) -->
 
 ---
 
