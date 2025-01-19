@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700&display=swap');
+
+@import "keep-react/css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* Defining custom utility classes in your CSS */
+@layer utilities {
+  .custom-blue-btn {
+    @apply !py-2 !px-4 rounded-lg font-semibold !border !text-link hover:!bg-link hover:!text-white !transition-all duration-700 !ease-in-out !capitalize;
+    border: 1px solid theme('colors.link') !important;
+    height: auto !important;
+    background-color: transparent !important; 
+  }
+
+  .dark .custom-blue-btn {
+    @apply !text-link hover:!text-d-ctaText;
+  }
+
+  .custom-green-btn {
+    @apply !py-2 !px-4 rounded-lg font-semibold !border !text-green hover:!bg-green hover:!text-l-ctaText !transition-all duration-700 !ease-in-out !capitalize;
+    border: 1px solid theme('colors.green') !important;
+    background-color: transparent !important; 
+    box-shadow: none !important;
+  }
+
+  .dark .custom-green-btn {
+    @apply !text-green hover:!text-d-ctaText;
+  }
+
+  .custom-red-btn {
+    @apply !py-2 !px-4 rounded-lg font-semibold !border !text-c-danger hover:!bg-c-danger hover:!text-l-ctaText !transition-all duration-700 !ease-in-out !capitalize;
+    border: 1px solid theme('colors.c.danger') !important;
+    background-color: transparent !important; 
+    box-shadow: none !important;
+  }
+
+  .dark .custom-red-btn {
+    @apply !text-c-danger hover:!text-lightText;
+  }
+ 
+  .custom-gray-btn {
+    @apply !py-2 !px-4 rounded-lg font-semibold !border !text-d-secondary hover:!text-d-secondary hover:!border-d-secondary !transition-all duration-700 !ease-in-out !capitalize;
+    border: 1px solid theme('colors.d.secondary') !important;
+    background-color: transparent !important; 
+    box-shadow: none !important;
+  }
+
+  .dark .custom-gray-btn {
+    @apply !text-d-secondary dark:hover:!bg-d-secondary hover:!text-d-secondary;
+  }
+  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.dark {
+  background-color: theme('colors.d.background');
+  /* color: theme('colors.d.primary'); */
+}
+
+code {
+  font-family: 'Poppins', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* 
+.kkkk {
+  border: #E0E0E0,#333333,#A8E6CF,FFD700,#F4D1C1,#D79985,#007BFF,#0A6A47,#FFD700,#FF6F30,#36454F,#FF4136,#4CAF50,#FF9800,#00BCD4,#B3C7F9,#999999,#8A5A3B,#666666,#E0E0E0,#FFFFFF,#333333,#666666,#E0E0E0,#d3d3d3,#FFFFFF,#D79985,#101316,#E0E0E0,#B0B0B0,#333333,#161a1e,#FFFFFF,#D79985,rgba(10, 106, 71, 0.5),#8A5A3B,#B3C7F9,#A6D1FF,#888888;
+} */
