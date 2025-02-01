@@ -12,7 +12,7 @@ import ProductCard from '../components/ProductCard';
 import ViewButton from '../components/buttons/ViewButton';
 import { useProduct } from '../hooks/useProduct';
 import { useCart } from '../hooks/useCart';
-import { Button } from "keep-react";
+import { Button, CircleProgress } from "keep-react";
 import { ShoppingCart } from 'phosphor-react';
 import { Carousel, CarouselItem, CarouselSlides, CarouselControl, CarouselButtons, CarouselPrevButton, CarouselNextButton, CarouselIndicators } from 'keep-react';
 
@@ -33,10 +33,14 @@ const Home = () => {
     productGDError,
     productOfferError,
     offerProducts,
+    loadProducts
    } = useProduct();
 
-  const { addToCart} = useCart();
+  const { addToCart } = useCart();
 
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -72,7 +76,9 @@ const Home = () => {
   if (productGDLoading || productOfferLoading || productFeaturedLoading) {
     return (
       <Container className="py-8">
-        <Typography>Loading...</Typography>
+        <Typography>
+          <CircleProgress />
+        </Typography>
       </Container>
     );
   }
@@ -94,9 +100,9 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:text-white dark:bg-d-background">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-background text-l-primary dark:text-d-primary dark:bg-d-background">
+      <section className="bg-background text-l-primary dark:text-d-primary">
         <Container maxWidth="xl" className="py-8">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
@@ -154,6 +160,7 @@ const Home = () => {
       </Container>
 
       {/* Flash Sale Section */}
+      {productGreatDeals && productGreatDeals.map((product) => (
       <Container maxWidth="xl" className="py-8">
         <div className="flex justify-between items-center mb-4">
           <div>
@@ -220,14 +227,14 @@ const Home = () => {
         </div>
 
         <Grid container spacing={3}>
-          {productGreatDeals && productGreatDeals.map((product) => (
             <Grid item xs={12} sm={6} md={3} key={product.id}>
               <ProductCard product={product} isFlashSale={true} />
             </Grid>
-          ))}
+         
         </Grid>
         <ViewButton link="/products/flash-sale" text="View All Products" />
       </Container>
+      ))}
 
       {/* Featured Products Section */}
       {featuredProducts && featuredProducts.length > 0 && (

@@ -16,11 +16,15 @@ import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
 import Offers from './pages/Offers';
 import Payment from './pages/Payment';
+import About from './pages/About';
 import Checkout from './pages/Checkout';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './middleware/PrivateRoute';
 import PaymentDemo from "./pages/PaymentDemo.jsx";
+import PaymentSuccess from './components/payment/PaymentSuccess.jsx';
+import PaymentCancel from './components/payment/PaymentCancel.jsx';
 import ManageProducts from './pages/ManageProducts.jsx';
+import NewPassword from './pages/NewPassword.jsx';
 
 function App() {
   return (
@@ -30,7 +34,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <Router>
-            <div className="min-h-screen bg-l-background dark:bg-d-boxBg/95 text-l-primary dark:text-d-primary font-poppins">
+            <div className="min-h-screen bg-l-background dark:bg-d-background/95 text-l-primary dark:text-d-primary font-poppins">
               <Navbar />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -40,6 +44,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Register />} />
                 <Route path="/offers" element={<Offers />} />
+                <Route path="/new-password" element={<NewPassword />} />
+                <Route path="/about" element={<About />} />
                 <Route
                   path="/profile"
                   element={
@@ -81,6 +87,22 @@ function App() {
                   }
                 />
                 <Route
+                  path="/payment/success"
+                  element={
+                    <PrivateRoute>
+                      <PaymentSuccess />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/payment/cancel"
+                  element={
+                    <PrivateRoute>
+                      <PaymentCancel />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
                   path="/orders"
                   element={
                     <PrivateRoute>
@@ -96,7 +118,6 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-                {/* 404 Page - This should be the last route */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
