@@ -198,6 +198,7 @@ export const useProfile = () => {
   };
 
   const requestPasswordReset = async (email) => {
+    setLoading(true);
     try {
       const response = await fetch(`${USER_API}/password/reset/request`, {
         method: 'POST',
@@ -210,7 +211,7 @@ export const useProfile = () => {
       const result = await response.json();
       
       if (response.ok) {
-        return { success: true, message: result.message };
+        return { success: true, message: result.message, resetLink: result.data.reset_password_link  };
       } else {
         return { 
           success: false, 
@@ -224,6 +225,47 @@ export const useProfile = () => {
         error: 'Network error occurred',
         errorDetails: []
       };
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+        clearProfileMessages(3);
+      }, 1000);
+    }
+  };
+
+  const resetPassword = async (password, token) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${USER_API}/password/reset?token=${token}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ new_password: password }),
+      });
+
+      const result = await response.json();
+      
+      if (response.ok) {
+        return { success: true, message: result.message};
+      } else {
+        return { 
+          success: false, 
+          error: result.error,
+          errorDetails: result.errorDetails || []
+        };
+      }
+    } catch (error) {
+      return { 
+        success: false, 
+        error: 'Network error occurred',
+        errorDetails: []
+      };
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+        clearProfileMessages(2);
+      }, 1000);
     }
   };
 
@@ -341,6 +383,7 @@ export const useProfile = () => {
     logout,
     clearProfileMessages,
     clearProfileError,
-    switchRole
+    switchRole,
+    resetPassword
   };
 };

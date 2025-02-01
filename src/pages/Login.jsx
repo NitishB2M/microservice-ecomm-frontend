@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { TextField, Paper, Typography, Alert, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Paper, Typography, Alert } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import { Envelope, Lock, User } from 'phosphor-react';
 import { Label, Input, InputIcon, Button } from 'keep-react';
@@ -11,16 +11,10 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState({ message: '', details: [] });
   const [successMessage, setSuccessMessage] = useState('');
-  const [resetEmail, setResetEmail] = useState('');
   const navigate = useNavigate();
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const { login, user, requestPasswordReset } = useAuth();
 
-  const token = localStorage.getItem('token');
-  // if (token) {
-  //   console.log(token);
-  //   navigate('/profile');
-  // } else {
   useEffect(() => {
     if (user && Object.keys(user).length > 1) {
       navigate('/profile');
@@ -28,7 +22,6 @@ const Login = () => {
       console.log('no token');
     }
   }, [navigate, user]);
-  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,8 +30,8 @@ const Login = () => {
 
     const result = await login(email, password, username);
     if (result.success) {
-      setSuccessMessage(result.message);
-      navigate('/profile');
+        setSuccessMessage(result.message);
+        navigate('/profile');
     } else {
       setError({
         message: result.error,
@@ -47,14 +40,31 @@ const Login = () => {
     }
   };
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (event) => {
+    event.preventDefault();
     setError({ message: '', details: [] });
     setSuccessMessage('');
+    if (!email) {
+      setError({ message: 'Please enter your email address', details: [] });
+      return;
+    } 
 
-    const result = await requestPasswordReset(resetEmail);
+    const result = await requestPasswordReset(email);
     if (result.success) {
       setSuccessMessage(result.message);
-      setResetEmail('');
+      const link = result.resetLink;
+      setResetDialogOpen(true);
+      if (!link) {
+        setError({
+          message: 'Password reset link not found',
+          details: []
+        });
+        return;
+      }
+      setTimeout(() => {
+        setResetDialogOpen(false);
+        window.open(link, '_blank');
+      }, 3000);
     } else {
       setError({
         message: result.error,
@@ -232,7 +242,7 @@ const Login = () => {
                     variant="contained"
                     className="bg-l-boxBg hover:bg-l-boxBg/80 dark:bg-d-boxBg dark:hover:bg-d-boxBg/80 w-full"
                   >
-                    Login
+                    Reset Password
                   </Button>
                 </form>
 
@@ -241,7 +251,7 @@ const Login = () => {
                     onClick={(prev) => setResetDialogOpen(!prev)}
                     className="text-c-info hover:text-c-info/80"
                   >
-                    Forgot Password?
+                    Login
                   </Button>
                   <Link to="/signup" className="text-c-info hover:text-c-info/80">
                     Sign up
