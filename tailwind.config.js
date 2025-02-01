@@ -41,7 +41,8 @@ const config = {
           hover: '#D79985',
         },
         d: {
-          background: '#101316',
+          background: 'rgb(15, 22, 36)',
+          background1: '#101316',
           primary: '#E0E0E0',
           secondary: '#B0B0B0',
           border: '#333333',
